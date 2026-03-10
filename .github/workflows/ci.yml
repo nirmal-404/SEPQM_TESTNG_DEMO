@@ -1,0 +1,87 @@
+name: TestNG CI workflow
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    environment: dev
+    permissions:
+      contents: read
+      actions: read
+      checks: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+
+      - name: Build and Run tests
+        run: mvn -B clean test
+
+      # - name: Publish Test Results to Dashboard
+      #   uses: EnricoMi/publish-unit-test-result-action@v2
+      #   if: always()
+      #   with:
+      #     files: test-output/junitreports/**/*.xml
+
+      - name: Publish TestNG results to GitHub Actions dashboard
+        uses: dorny/test-reporter@v2
+        if: ${{ !cancelled() }}
+        with:
+          name: TestNG Tests
+          path: test-output/junitreports/**/*.xml
+          reporter: java-junit
+          use-actions-summary: 'true'
+          report-title: 'TestNG Tests'
+          fail-on-empty: 'false'
+
+      - name: Upload Surefire Reports
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: surefire-reports
+          path: |
+            target/surefire-reports
+            test-output/junitreports
+          if-no-files-found: ignore
+
+      - name: Upload TestNG Reports
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: testng-test-output
+          path: test-output
+          if-no-files-found: ignore
+
+      - name: Send Email Notification if Tests Fail
+        if: failure()
+        uses: dawidd6/action-send-mail@v11
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: "CI Pipeline Failed - TestNG Tests"
+          to: nishanthiganewatte@gmail.com
+          from: GitHub Actions <${{ secrets.EMAIL_USERNAME }}>
+          body: |
+            TestNG tests have failed in the CI pipeline.
+
+            Repository: ${{ github.repository }}
+            Branch: ${{ github.ref }}
+            Commit: ${{ github.sha }}
+
+            Please check the GitHub Actions dashboard for detailed results.

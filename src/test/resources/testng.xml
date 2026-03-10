@@ -1,0 +1,69 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="TestNGDemoSuite" verbose="1">
+  
+  <!-- ========================================
+       DEMO SHOWCASE TESTS (47 tests)
+       Member 1: Assertions & Data Providers
+       Member 2: Fixtures
+       Member 3: Mocking
+       ======================================== -->
+  
+  <test name="Member 1 - Assertions Demo">
+    <classes>
+      <class name="com.demo.demo.AssertionShowcaseTest" />
+    </classes>
+  </test>
+
+  <test name="Member 1 - Data Providers Demo">
+    <classes>
+      <class name="com.demo.demo.DataProviderShowcaseTest" />
+    </classes>
+  </test>
+
+  <test name="Member 2 - Fixtures Demo">
+    <classes>
+      <class name="com.demo.demo.FixtureShowcaseTest" />
+    </classes>
+  </test>
+
+  <test name="Member 3 - Mocking Demo">
+    <classes>
+      <class name="com.demo.demo.MockingShowcaseTest" />
+    </classes>
+  </test>
+
+  <!-- ========================================
+       ORIGINAL BUSINESS LOGIC TESTS (26 tests)
+       ======================================== -->
+
+  <test name="Legacy Auth Demo">
+    <packages>
+      <package name="com.demo.auth" />
+    </packages>
+  </test>
+
+  <test name="OMS Auth Tests">
+    <classes>
+      <class name="com.demo.oms.service.AuthServiceTest" />
+      <class name="com.demo.oms.service.AuthServiceLoginDataProviderTest" />
+    </classes>
+  </test>
+
+  <test name="OMS Product Tests">
+    <classes>
+      <class name="com.demo.oms.service.ProductServiceTest" />
+    </classes>
+  </test>
+
+  <test name="OMS Payment Tests">
+    <classes>
+      <class name="com.demo.oms.service.PaymentServiceTest" />
+    </classes>
+  </test>
+
+  <test name="OMS Order Tests">
+    <classes>
+      <class name="com.demo.oms.service.OrderServiceTest" />
+    </classes>
+  </test>
+</suite>
