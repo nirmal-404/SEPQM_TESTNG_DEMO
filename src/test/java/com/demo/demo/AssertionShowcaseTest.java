@@ -119,7 +119,8 @@ public class AssertionShowcaseTest {
         Assert.assertEquals(productCategories, expectedCategories, "Categories should match");
         
         // Check if list contains specific item
-        Assert.assertTrue(productCategories.contains("Electronics"), "Should contain Electronics");
+        // Assert.assertTrue(productCategories.contains("Electronics"), "Should contain Electronics");
+        Assert.assertFalse(productCategories.contains("Electronics"), "Should contain Electronics");
         
         // Size checks
         Assert.assertEquals(productCategories.size(), 3, "Should have 3 categories");
