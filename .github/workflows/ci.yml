@@ -2,9 +2,9 @@ name: TestNG CI workflow
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   test:
@@ -24,7 +24,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '17'
+          java-version: "17"
           cache: maven
 
       - name: Build and Run tests
@@ -43,9 +43,9 @@ jobs:
           name: TestNG Tests
           path: test-output/junitreports/**/*.xml
           reporter: java-junit
-          use-actions-summary: 'true'
-          report-title: 'TestNG Tests'
-          fail-on-empty: 'false'
+          use-actions-summary: "true"
+          report-title: "TestNG Tests"
+          fail-on-empty: "false"
 
       - name: Upload Surefire Reports
         if: always()
@@ -75,7 +75,7 @@ jobs:
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
           subject: "CI Pipeline Failed - TestNG Tests"
-          to: kumodnenuk@gmail@gmail.com
+          to: nirmalperera2509@gmail.com
           from: GitHub Actions <${{ secrets.EMAIL_USERNAME }}>
           body: |
             TestNG tests have failed in the CI pipeline.
@@ -85,5 +85,3 @@ jobs:
             Commit: ${{ github.sha }}
 
             Please check the GitHub Actions dashboard for detailed results.
-
-            
