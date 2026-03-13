@@ -75,7 +75,7 @@ jobs:
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
           subject: "CI Pipeline Failed - TestNG Tests"
-          to: nirmalperera2509@gmail.com
+          to: kumodnenuk@gmail.com
           from: GitHub Actions <${{ secrets.EMAIL_USERNAME }}>
           body: |
             TestNG tests have failed in the CI pipeline.
